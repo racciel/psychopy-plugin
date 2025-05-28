@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGazer Integration</title>
+    <script src="https://webgazer.cs.brown.edu/webgazer.js"></script>
+</head>
+<body>
+    <script>
+        window.onload = async function () {
+            await webgazer.setRegression('ridge')
+                          .setGazeListener((data, elapsedTime) => {
+                              if (data) {
+                                  fetch('http://localhost:5000/gaze', {
+                                      method: 'POST',
+                                      headers: { 'Content-Type': 'application/json' },
+                                      body: JSON.stringify({ x: data.x, y: data.y })
+                                  });
+                              }
+                          })
+                          .begin();
+            webgazer.showVideoPreview(true).showPredictionPoints(true);
+        };
+
+        window.onbeforeunload = function () {
+            webgazer.end();
+        };
+    </script>
+</body>
+</html>

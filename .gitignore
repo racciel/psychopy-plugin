@@ -1,3 +1,7 @@
 psychovenv
 wxPython
 __pycache__/
+file_analysis.py
+eye_tracking_data.csv
+webgazer_data.hdf5 
+actual_data.hdf5
